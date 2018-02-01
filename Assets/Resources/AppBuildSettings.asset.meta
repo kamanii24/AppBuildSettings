@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: aa9f4049b3e864912b6b994389cd45fc
+labels:
+- AppBuildSettings
+- Data
+- ScriptableObject
+timeCreated: 1517473819
+licenseType: Pro
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
