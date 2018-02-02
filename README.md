@@ -7,7 +7,7 @@
 **AppBuildSettings**の対象のプラットフォーム用の情報を入力し、ビルドするだけです。<br>
 各情報はビルド前処理**OnPreprocessBuild**で各プラットフォームのPlayerSettingsの内容を上書きます。<br>
 <br>
-![Imgur](https://i.imgur.com/E5JJ9C8.png)
+![Imgur](https://i.imgur.com/pk7hpHM.png)
 <br>
 
 ## ビルド環境
