@@ -23,6 +23,7 @@ public class AppBuildSettings : ScriptableObject
         public Platform platform;
         public string version       = "1.0.0";
         public string buildVersion  = "0";
+        public int versionCode = 0;
         public Texture2D icon;
     }
 

@@ -6,8 +6,8 @@
 // ==============================
 
 using UnityEngine;
-using UnityEditor.Build;
 using UnityEditor;
+using UnityEditor.Build;
 
 [CustomEditor(typeof(AppBuildSettings))]
 public class AppBuildSettingsEditor : Editor, IPreprocessBuild
@@ -39,7 +39,16 @@ public class AppBuildSettingsEditor : Editor, IPreprocessBuild
                     EditorGUILayout.LabelField(item.platform.ToString());
                     EditorGUI.indentLevel++;  // インデント
                     item.version = (string)EditorGUILayout.TextField("Version", item.version);
-                    item.buildVersion = (string)EditorGUILayout.TextField("Build Version", item.buildVersion);
+
+                    if(item.platform == AppBuildSettings.Platform.iOS)
+                    {
+                        item.buildVersion = (string)EditorGUILayout.TextField("Build Version", item.buildVersion);
+                    }
+                    else
+                    {
+                        item.versionCode = (int)EditorGUILayout.IntField("Version Code", item.versionCode);
+                    }
+
                     item.icon = (Texture2D)EditorGUILayout.ObjectField("App Icon", item.icon, typeof(Texture2D), false);
                     EditorGUI.indentLevel--;  // インデント戻し
                 }
@@ -54,65 +63,69 @@ public class AppBuildSettingsEditor : Editor, IPreprocessBuild
 	// ------------
     // ビルド前処理
 	// PlayerSettingsの更新
-    public void OnPreprocessBuild(UnityEditor.BuildTarget buildTarget, string path)
+    public void OnPreprocessBuild(BuildTarget buildTarget, string path)
     {
         var buildSettings = Resources.Load<AppBuildSettings>("AppBuildSettings");
         
         for (int i = 0; i < buildSettings.settings.Length; i++)
         {
-            AppBuildSettings.Settings settings = buildSettings.settings[i];
-            GlobalConfig.AppTitle appTitle = settings.appTitle;
-            PlayerSettings.productName = buildSettings.settings[i].productName;
+            // Setting情報取得
+            AppBuildSettings.Settings settings = buildSettings.settings[i];            
+            // アプリタイトルの設定
+            PlayerSettings.productName = settings.productName;
 
-            if (appTitle == buildSettings.buildTargetTitle)
+            // 設定されたビルドターゲットタイトルである場合
+            if (settings.appTitle == buildSettings.buildTargetTitle)
             {
-                foreach(AppBuildSettings.PlatformItem item in settings.items)
+                foreach (AppBuildSettings.PlatformItem item in settings.items)
                 {
-                    switch(item.platform)
+                    PlayerSettings.bundleVersion = item.version;    // アプリバージョン
+                    // 対象のプラットフォーム
+                    if (buildTarget == BuildTarget.iOS)             // iOS
                     {
-                        case AppBuildSettings.Platform.iOS:
-                            // BundleID設定
-                            PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.iOS, buildSettings.settings[i].bundleId);
-                            // アプリアイコンの設定
-                            SetIcons(BuildTargetGroup.iOS, item.icon);
+                        PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.iOS, settings.bundleId);       // BundleID設定
+                        PlayerSettings.iOS.buildNumber = item.buildVersion;                                     // ビルドバージョンの設定
+                        SetIcons(BuildTargetGroup.iOS, item.icon);                                              // アイコンの設定
                         break;
-                        case AppBuildSettings.Platform.Android:
-                            // BundleID設定
-                            PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.Android, buildSettings.settings[i].bundleId);
-                            // アプリアイコンの設定
-                            SetIcons(BuildTargetGroup.Android, item.icon);
-                            break;
+                    }
+                    else if (buildTarget == BuildTarget.Android)    // Android
+                    {
+                        PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.Android, settings.bundleId);   // BundleID設定
+                        PlayerSettings.Android.bundleVersionCode = item.versionCode;                            // ビルドバージョンの設定
+                        SetIcons(BuildTargetGroup.Android, item.icon);                                          // アイコンの設定
+                        break;
                     }
                 }
-                // アセット保存
+                // 設定の保存
                 AssetDatabase.SaveAssets();
                 break;
             }
         }
     }
 
-	// アプリアイコンの設定
-	private void SetIcons(BuildTargetGroup buildTarget, Texture2D icon)
-	{
-		// アイコンの反映
-		if (icon != null)
-		{
-			// プラットフォームのアイコンを取得
-            Texture2D[] icons = PlayerSettings.GetIconsForTargetGroup(buildTarget);
+    // アイコン設定
+    private void SetIcons(BuildTargetGroup buildTargetGroup, Texture2D icon)
+    {
+        // アイコンの反映
+        if (icon != null)
+        {
+            // プラットフォームのアイコンを取得
+            Texture2D[] icons = PlayerSettings.GetIconsForTargetGroup(buildTargetGroup);
             // アイコン配列にTexuterを格納
             for (int i = 0; i < icons.Length; i++)
             {
                 icons[i] = icon;
             }
             // 取得したアイコン画像をPlayerSettingsに反映
-            PlayerSettings.SetIconsForTargetGroup(buildTarget, icons);
-		}
-	}
+            PlayerSettings.SetIconsForTargetGroup(buildTargetGroup, icons);
+        }
+    }
 
     // 実行順
     public int callbackOrder { get { return 0; } }
 
 
+    // ------------
     // AppBuildSettingsアセットピックアップ
     [MenuItem("Tools/AppBuildSettings")]
     static void SelectionAsset()
