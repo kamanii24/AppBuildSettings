@@ -8,7 +8,7 @@
 設定後はApplyを押すのをお忘れなく。
 各情報はビルド前処理**OnPreprocessBuild**で各プラットフォームのPlayerSettingsの内容を上書きます。<br>
 <br>
-![Imgur](https://i.imgur.com/E5JJ9C8.png)
+![Imgur](https://i.imgur.com/pk7hpHM.png)
 <br>
 
 **ActiveTitleの変更**  
