@@ -4,7 +4,7 @@
 現在の対象プラットフォームはiOS、Androidのみです。<br>
 
 # 使い方
-***Tools/AppBuildSettings***で設定ファイルを開くことができます。  
+***Tools/AppBuildSettings*** で設定ファイルを開くことができます。  
 **AppBuildSettings**の対象のプラットフォーム用の情報を入力し、ビルドするだけです。<br>
 設定後に**Apply**を押すのをお忘れなく。
 各情報はビルド前処理**OnPreprocessBuild**で各プラットフォームのPlayerSettingsの内容を上書きます。<br>
