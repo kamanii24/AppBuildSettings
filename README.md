@@ -6,15 +6,14 @@
 # 使い方
 ***Tools/AppBuildSettings*** で設定ファイルを開くことができます。  
 **AppBuildSettings**の対象のプラットフォーム用の情報を入力し、ビルドするだけです。<br>
-設定後に**Apply**を押すのをお忘れなく。
+設定後に**Apply**を押すのをお忘れなく。  
 各情報はビルド前処理**OnPreprocessBuild**で各プラットフォームのPlayerSettingsの内容を上書きます。<br>
 <br>
 ![Imgur](https://i.imgur.com/XQy09o1.png)
 <br>
 
-#### ActiveTitleの変更 . 
-アプリ名やActiveTitleの数はAppBuildSettings.csの中のUser Editable Area内の項目を変更してください。
-
+#### ActiveTitleの変更  
+アプリ名やActiveTitleの数は**AppBuildSettings.cs**の中の ***User Editable Area*** 内の項目を変更してください。  
 **AppBuildSettings.cs**
 ```
 #region User Editable Area
