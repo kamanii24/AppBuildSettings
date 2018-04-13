@@ -5,8 +5,9 @@
 現在の対象プラットフォームはiOS、Androidのみです。  
 
 # 使い方
-***Tools/AppBuildSettings*** で設定ファイルを開くことができます。  
-**AppBuildSettings**の対象のプラットフォーム用の情報を入力し、ビルドするだけです。<br>
+ツールバーの ***Tools/AppBuildSettings*** で設定ファイルを開くことができます。  
+![Imgur](https://i.imgur.com/jeT5RaY.png)  
+**AppBuildSettings**に対象となるプラットフォームの情報を入力し、ビルドするだけです。<br>
 設定後に**Apply**を押すのをお忘れなく。  
 <br>
 ![Imgur](https://i.imgur.com/XQy09o1.png)
