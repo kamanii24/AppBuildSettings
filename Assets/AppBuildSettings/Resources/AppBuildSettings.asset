@@ -14,54 +14,66 @@ MonoBehaviour:
   buildTargetTitle: 0
   settings:
   - appTitle: 0
-    productName: MyApps
-    bundleId: com.mycompany.myapps
+    productName: MyApps1
     items:
     - platform: 0
+      bundleId: com.mycompany.myapps
       version: 1.0.0
       buildVersion: 0
+      versionCode: 0
       icon: {fileID: 0}
     - platform: 1
+      bundleId: com.mycompany.myapps
       version: 1.0.0
       buildVersion: 0
+      versionCode: 0
       icon: {fileID: 0}
     isEditorOpen: 1
   - appTitle: 1
-    productName: MyApps
-    bundleId: com.mycompany.myapps
+    productName: MyApps2
     items:
     - platform: 0
+      bundleId: com.mycompany.myapps
       version: 1.0.0
       buildVersion: 0
+      versionCode: 0
       icon: {fileID: 0}
     - platform: 1
+      bundleId: com.mycompany.myapps
       version: 1.0.0
       buildVersion: 0
+      versionCode: 0
       icon: {fileID: 0}
     isEditorOpen: 1
   - appTitle: 2
-    productName: MyApps
-    bundleId: com.mycompany.myapps
+    productName: MyApps3
     items:
     - platform: 0
+      bundleId: com.mycompany.myapps
       version: 1.0.0
       buildVersion: 0
+      versionCode: 0
       icon: {fileID: 0}
     - platform: 1
+      bundleId: com.mycompany.myapps
       version: 1.0.0
       buildVersion: 0
+      versionCode: 0
       icon: {fileID: 0}
     isEditorOpen: 1
   - appTitle: 3
-    productName: MyApps
-    bundleId: com.mycompany.myapps
+    productName: MyApps4
     items:
     - platform: 0
+      bundleId: com.mycompany.myapps
       version: 1.0.0
       buildVersion: 0
+      versionCode: 0
       icon: {fileID: 0}
     - platform: 1
+      bundleId: com.mycompany.myapps
       version: 1.0.0
       buildVersion: 0
+      versionCode: 0
       icon: {fileID: 0}
     isEditorOpen: 1

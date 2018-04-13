@@ -18,7 +18,10 @@ public class AppBuildSettingsEditor : Editor, IPreprocessBuild
         var buildSettings = target as AppBuildSettings;
 
 		// ビルド対象のタイトルを更新
-        buildSettings.buildTargetTitle = (GlobalConfig.AppTitle)EditorGUILayout.EnumPopup("Build Target Title", buildSettings.buildTargetTitle);
+        buildSettings.buildTargetTitle = (AppBuildSettings.AppTitle)EditorGUILayout.EnumPopup("Active Title", buildSettings.buildTargetTitle);
+        EditorGUILayout.Space();
+        // 保存
+        if (GUILayout.Button("Apply")) Apply();
         EditorGUILayout.Space();
 
         for(int i=0; i<buildSettings.settings.Length; i++)
@@ -31,13 +34,13 @@ public class AppBuildSettingsEditor : Editor, IPreprocessBuild
                 // ProductName, BundleIDの設定
                 EditorGUI.indentLevel++;  // インデント
                 stg.productName = (string)EditorGUILayout.TextField("Product Name", stg.productName);
-                stg.bundleId = (string)EditorGUILayout.TextField("Bundle ID", stg.bundleId);
 
                 EditorGUILayout.Space();
                 foreach(AppBuildSettings.PlatformItem item in stg.items)
                 {
                     EditorGUILayout.LabelField(item.platform.ToString());
                     EditorGUI.indentLevel++;  // インデント
+                    item.bundleId = (string)EditorGUILayout.TextField("Bundle ID", item.bundleId);
                     item.version = (string)EditorGUILayout.TextField("Version", item.version);
 
                     if(item.platform == AppBuildSettings.Platform.iOS)
@@ -55,9 +58,19 @@ public class AppBuildSettingsEditor : Editor, IPreprocessBuild
                 EditorGUI.indentLevel--;  // インデント戻し
             }
         }
-
+        // 保存
+        EditorGUILayout.Space();
+        if (GUILayout.Button("Apply")) Apply();
         this.serializedObject.ApplyModifiedProperties();
-	}
+    }
+
+    // 保存
+    public void Apply()
+    {
+        var selectedObject = UnityEditor.Selection.activeObject;
+        EditorUtility.SetDirty(selectedObject);
+        AssetDatabase.SaveAssets();
+    }
 
 
 	// ------------
@@ -83,16 +96,16 @@ public class AppBuildSettingsEditor : Editor, IPreprocessBuild
                     // 対象のプラットフォーム
                     if (buildTarget == BuildTarget.iOS)             // iOS
                     {
-                        PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.iOS, settings.bundleId);       // BundleID設定
-                        PlayerSettings.iOS.buildNumber = item.buildVersion;                                     // ビルドバージョンの設定
-                        SetIcons(BuildTargetGroup.iOS, item.icon);                                              // アイコンの設定
+                        PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.iOS, item.bundleId);   // BundleID設定
+                        PlayerSettings.iOS.buildNumber = item.buildVersion;                             // ビルドバージョンの設定
+                        SetIcons(BuildTargetGroup.iOS, item.icon);                                      // アイコンの設定
                         break;
                     }
                     else if (buildTarget == BuildTarget.Android)    // Android
                     {
-                        PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.Android, settings.bundleId);   // BundleID設定
-                        PlayerSettings.Android.bundleVersionCode = item.versionCode;                            // ビルドバージョンの設定
-                        SetIcons(BuildTargetGroup.Android, item.icon);                                          // アイコンの設定
+                        PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.Android, item.bundleId);   // BundleID設定
+                        PlayerSettings.Android.bundleVersionCode = item.versionCode;                        // ビルドバージョンの設定
+                        SetIcons(BuildTargetGroup.Android, item.icon);                                      // アイコンの設定
                         break;
                     }
                 }
