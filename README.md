@@ -1,19 +1,20 @@
 # AppBuildSettings
-#### 概要
-ひとつのプロジェクトで複数のアプリとして管理するときに便利なエディタ拡張です。<br>
-現在の対象プラットフォームはiOS、Androidのみです。<br>
+### 概要
+ひとつのプロジェクトで複数のアプリとして管理するときに便利なエディタ拡張です。  
+各情報はビルド前処理**OnPreprocessBuild**で各プラットフォームのPlayerSettingsの内容を上書きます。  
+現在の対象プラットフォームはiOS、Androidのみです。  
 
 # 使い方
 ***Tools/AppBuildSettings*** で設定ファイルを開くことができます。  
 **AppBuildSettings**の対象のプラットフォーム用の情報を入力し、ビルドするだけです。<br>
 設定後に**Apply**を押すのをお忘れなく。  
-各情報はビルド前処理**OnPreprocessBuild**で各プラットフォームのPlayerSettingsの内容を上書きます。<br>
 <br>
 ![Imgur](https://i.imgur.com/XQy09o1.png)
 <br>
 
-#### ActiveTitleの変更  
+### ActiveTitleの変更  
 アプリ名やActiveTitleの数は**AppBuildSettings.cs**の中の ***User Editable Area*** 内の項目を変更してください。  
+  
 **AppBuildSettings.cs**
 ```
 #region User Editable Area
